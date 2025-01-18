@@ -60,6 +60,7 @@ function OnBoard() {
       toast.error(`${errorMessage}`);
     }
   }
+  // this line have a problem
   async function createRecruiter(data: RecruiterInput) {
     try {
       const profileData:ProfileData = {
