@@ -6,7 +6,7 @@ type CommonLayoutProps = {
 };
 
 function CommonLayout({ children }: CommonLayoutProps) {
-    const isUser = false
+    const isUser = true
   return (
     <>
       { isUser && <Header />}
