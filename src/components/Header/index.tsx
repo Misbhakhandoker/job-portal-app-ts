@@ -16,14 +16,14 @@ function Header() {
       show: true,
     },
     {
-      label: "Login",
-      path: "/sign-in",
-      show: false,
+      label: "Auth",
+      path: "/auth",
+      show: true,
     },
     {
-      label: "Register",
-      path: "/sign-up",
-      show: false,
+      label: "Jobs",
+      path: "/jobs",
+      show: true,
     },
     {
       label: "Membership",
