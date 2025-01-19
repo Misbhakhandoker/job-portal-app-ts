@@ -7,15 +7,15 @@ export async function POST(req: NextRequest) {
   try {
     await connectToDB();
     const body = await req.json();
-    const {
-      userId,
-      role,
-      email,
-      isPremiumUser,
-      memberShipType,
-      memberShipStartDate,
-      memberShipEndDate,
-    } = body;
+    // const {
+    //   userId,
+    //   role,
+    //   email,
+    //   isPremiumUser,
+    //   memberShipType,
+    //   memberShipStartDate,
+    //   memberShipEndDate,
+    // } = body;
     const result = CandidateSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
@@ -44,26 +44,22 @@ export async function POST(req: NextRequest) {
     } = result.data;
 
     await Profile.create({
-      name,
-      skills,
-      college,
-      currentCompany,
-      collegeLocation,
-      currentJobLocation,
-      currentSalary,
-      graduatedYear,
-      noticePeriod,
-      totalExperience,
-      previousCompanies,
-      linkedinProfile,
-      githubProfile,
-      userId,
-      role,
-      email,
-      isPremiumUser,
-      memberShipType,
-      memberShipStartDate,
-      memberShipEndDate,
+      ...body,
+      candidateInfo: {
+        name,
+        skills,
+        college,
+        currentCompany,
+        collegeLocation,
+        currentJobLocation,
+        currentSalary,
+        graduatedYear,
+        noticePeriod,
+        totalExperience,
+        previousCompanies,
+        linkedinProfile,
+        githubProfile,
+      },
     });
     return NextResponse.json(
       { success: true, message: "Candidate create successfully" },

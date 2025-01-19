@@ -3,8 +3,10 @@ import { useOnBoard } from "@/lib/hooks/useOnBoard";
 import { ErrorResponse } from "@/lib/types/formControls";
 import {
   CandidateInput,
+  CandidateInputFormValues,
   CandidateSchema,
   RecruiterInput,
+  RecruiterInputFormValues,
   RecruiterSchema,
 } from "@/lib/validations/onboard";
 import { initialCandidateFormData, initialRecruiterFormData } from "@/utils";
@@ -24,10 +26,6 @@ import {
 import { Input } from "../ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-interface ProfileData {
-  recruiterInfo: RecruiterInput;
-} 
-
 function OnBoard() {
   const { candidateCreate, isLoading, recruiterCreate } = useOnBoard();
   const candidateForm = useForm<CandidateInput>({
@@ -41,15 +39,29 @@ function OnBoard() {
 
   async function createCandidate(data: CandidateInput) {
     try {
-      await candidateCreate.mutateAsync(
-        data,
-        // userId: "120",
-        // role: "candidate",
-        // email: "user@example.com",
-        // isPremiumUser: false,
-        // memberShipStartDate,
-        // memberShipEndDate,
-      );
+      const profileData: CandidateInputFormValues = {
+        userId: "233",
+        role: "candidate",
+        email: "user@example.com",
+        isPremiumUser: false,
+        memberShipType: null,
+        memberShipStartDate: null,
+        memberShipEndDate: null,
+        name: data?.name,
+        currentJobLocation: data?.currentJobLocation,
+        currentSalary: data?.currentSalary,
+        noticePeriod: data?.noticePeriod,
+        skills: data?.skills,
+        currentCompany: data?.currentCompany,
+        previousCompanies: data?.previousCompanies,
+        totalExperience: data?.totalExperience,
+        college: data?.college,
+        collegeLocation: data?.collegeLocation,
+        graduatedYear: data?.graduatedYear,
+        linkedinProfile: data?.linkedinProfile,
+        githubProfile: data?.githubProfile,
+      };
+      await candidateCreate.mutateAsync(profileData);
       // console.log(data, "createProfile candidate");
     } catch (error) {
       console.log("candidate error", error);
@@ -63,13 +75,18 @@ function OnBoard() {
   // this line have a problem
   async function createRecruiter(data: RecruiterInput) {
     try {
-      const profileData:ProfileData = {
-        recruiterInfo: {
-          name: data?.name,
-          companyName: data?.companyName,
-          companyRole: data?.companyRole,
-        }
-      }
+      const profileData: RecruiterInputFormValues = {
+        userId: "15614564",
+        role: "recruiter",
+        email: "user@example.com",
+        isPremiumUser: false,
+        memberShipType: null,
+        memberShipStartDate: null,
+        memberShipEndDate: null,
+        name: data?.name,
+        companyName: data?.companyName,
+        companyRole: data?.companyRole,
+      };
       await recruiterCreate.mutateAsync(profileData);
       // console.log(data, "createProfile recruiter");
     } catch (error) {

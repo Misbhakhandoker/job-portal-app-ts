@@ -14,13 +14,28 @@ export const CandidateSchema = z.object({
   graduatedYear: z.string().nonempty("required"),
   linkedinProfile: z.string().nonempty("required"),
   githubProfile: z.string().nonempty("required"),
-})
+});
 
 export const RecruiterSchema = z.object({
   name: z.string().nonempty("required"),
   companyName: z.string().nonempty("required"),
   companyRole: z.string().nonempty("required"),
-})
+});
 
 export type CandidateInput = z.infer<typeof CandidateSchema>;
 export type RecruiterInput = z.infer<typeof RecruiterSchema>;
+
+export type CandidateAndRecruiterCommonDataSchema = {
+  userId?: string;
+  role?: string;
+  email?: string;
+  isPremiumUser?: boolean;
+  memberShipType?: string | null;
+  memberShipStartDate?: string | null;
+  memberShipEndDate?: string | null;
+};
+export type CandidateInputFormValues = CandidateAndRecruiterCommonDataSchema &
+  CandidateInput;
+
+export type RecruiterInputFormValues = CandidateAndRecruiterCommonDataSchema &
+  RecruiterInput;

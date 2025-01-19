@@ -8,15 +8,7 @@ export async function POST(req: NextRequest) {
     await connectToDB();
     const body = await req.json();
     console.log("Incoming request body:", body);
-    // const {
-    //   userId,
-    //   role,
-    //   email,
-    //   isPremiumUser,
-    //   memberShipType,
-    //   memberShipStartDate,
-    //   memberShipEndDate,
-    // } = body;
+    // const { userId, role, email, isPremiumUser } = body;
     const result = RecruiterSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
@@ -31,10 +23,10 @@ export async function POST(req: NextRequest) {
     const { name, companyName, companyRole } = result.data;
     console.log("Parsed data:", { name, companyName, companyRole });
 
-  const profile =  await Profile.create({
-      name,
-      companyName,
-      companyRole,
+    const profile = await Profile.create({
+     
+     ...body,
+      recruiterInfo: { name, companyName, companyRole },
       // userId,
       // role,
       // email,
@@ -43,8 +35,8 @@ export async function POST(req: NextRequest) {
       // memberShipStartDate,
       // memberShipEndDate,
     });
-    console.log("profile create",profile );
-    
+    console.log("profile create", profile);
+
     return NextResponse.json(
       { success: true, message: "Recruiter create successfully" },
       { status: 201 }
